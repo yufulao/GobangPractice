@@ -30,7 +30,7 @@ public class BoardView : MonoBehaviour
         }
         else
         {
-            chessTemp = Instantiate(player0, chessContainer);
+            chessTemp = Instantiate(player1, chessContainer);
         }
 
         chessTemp.transform.position = chessPosition;
