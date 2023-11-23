@@ -8,8 +8,9 @@ public class GameController : MonoBehaviour
 {
     private Board _board;
     public BoardView view;
+    [SerializeField]private List<Player> _players;
     [SerializeField] private List<Transform> _boardTransformPoints = new List<Transform>(); //棋盘两个角
-    [SerializeField] private int currentPlayer; //记录当前玩家
+    private Player currentPlayer; //记录当前玩家
 
     private GamingFsmManager _gamingFsmManager;
 
@@ -23,14 +24,9 @@ public class GameController : MonoBehaviour
         _gamingFsmManager.OnUpdate();
     }
 
-    private void StartGame()
-    {
-        _gamingFsmManager = new GamingFsmManager(this);
-        _gamingFsmManager.OnInit();
-        //开始游戏流程
-        _gamingFsmManager.SetCurrentState(GamingStateEnum.GameIniting);
-    }
-
+    /// <summary>
+    /// 初始化游戏
+    /// </summary>
     public void InitGame()
     {
         _board = new Board();
@@ -38,17 +34,27 @@ public class GameController : MonoBehaviour
         this.view.ResetBoardView();
     }
 
+    /// <summary>
+    /// 重新开始游戏
+    /// </summary>
     public void ResetGame()
     {
         _board.ResetBoard();
         view.ResetBoardView();
     }
 
-    public void SetCurrentPlayer(int currentPlayerT)
+    /// <summary>
+    /// 设置当前玩家
+    /// </summary>
+    /// <param name="currentPlayerIndex">当前玩家id</param>
+    public void SetCurrentPlayer(int currentPlayerIndex)
     {
-        currentPlayer = currentPlayerT; //玩家1先手
+        currentPlayer = _players[currentPlayerIndex]; //玩家1先手
     }
 
+    /// <summary>
+    /// Update检测输入
+    /// </summary>
     public void InputUpdate()
     {
         if (Input.GetMouseButtonDown(0))
@@ -57,11 +63,28 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 重新开始游戏的摁钮绑定事件
+    /// </summary>
     public void ResetGameBtn()
     {
         _gamingFsmManager.SetCurrentState(GamingStateEnum.GameReseting);
     }
 
+    /// <summary>
+    /// 程序入口
+    /// </summary>
+    private void StartGame()
+    {
+        _gamingFsmManager = new GamingFsmManager(this);
+        _gamingFsmManager.OnInit();
+        //开始游戏流程
+        _gamingFsmManager.SetCurrentState(GamingStateEnum.GameIniting);
+    }
+    
+    /// <summary>
+    /// 鼠标左键摁下事件
+    /// </summary>
     private void OnMouse0Down()
     {
         //Debug.Log("OnMouse0Down");
@@ -73,21 +96,28 @@ public class GameController : MonoBehaviour
         });
     }
 
-    private void CheckChessResult(Vector2 xyPoint) //检查结果
+    /// <summary>
+    /// 检测下棋结果
+    /// </summary>
+    /// <param name="xyPoint">棋子在board中的索引坐标</param>
+    private void CheckChessResult(Vector2 xyPoint)
     {
         int x = (int)xyPoint.x;
         int y = (int)xyPoint.y;
-        int result = _board.CheckReslut(x, y, currentPlayer);
-        //Debug.Log(result);
-        if (result == -1) //游戏继续
+        SetChessResultEnum result = _board.CheckReslut(x, y, currentPlayer);
+        switch (result)
         {
-            //切换玩家
-            currentPlayer = currentPlayer == 0 ? 1 : 0;
-        }
-        else //游戏结束
-        {
-            view.ShowWinMessage(result);
-            _gamingFsmManager.SetCurrentState(GamingStateEnum.GameEnd);
+            case SetChessResultEnum.Continue:
+                //切换玩家
+                currentPlayer = currentPlayer.id == 0 ? _players[1] : _players[0];
+                break;
+            case SetChessResultEnum.GameDraw:
+                view.ShowDrawMessage();
+                break;
+            case SetChessResultEnum.GameWin:
+                view.ShowWinMessage(currentPlayer);
+                _gamingFsmManager.SetCurrentState(GamingStateEnum.GameEnd);
+                break;
         }
     }
 }
