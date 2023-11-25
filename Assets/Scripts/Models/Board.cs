@@ -7,6 +7,7 @@ using UnityEngine;
 public class Board
 {
     [HideInInspector] public Vector2 boardSize;
+    private GameController _gameController;
     private Chess[,] _board; // 二维数组表示棋盘状态，-1表示空，0表示黑子，1表示白子
     private int _totalSites = 0; //一共多少个位，优化判断平局
     private int _currentTotalSet = 0; //当前一共下了多少个棋子
@@ -18,9 +19,9 @@ public class Board
     /// 初始化棋盘
     /// </summary>
     /// <param name="boardTransformPoints">棋盘的左上角和右下角点位</param>
-    public void InitBoard(List<Transform> boardTransformPoints) //初始化棋盘
+    public void InitBoard(List<Transform> boardTransformPointsT) //初始化棋盘
     {
-        SetBoardParams(boardTransformPoints);
+        SetBoardParams(boardTransformPointsT);
         ResetBoard();
     }
 
@@ -47,7 +48,7 @@ public class Board
     /// <param name="worldPoint">点击的世界坐标</param>
     /// <param name="player">当前玩家</param>
     /// <param name="callback">如果成功下棋的回调</param>
-    public void SetChess(Vector3 worldPoint, Player player, Action<Vector2, Vector2> callback = null)
+    public void SetChess(Vector3 worldPoint,Player player, Action<Vector2, Vector2> callback = null)
     {
         Vector3 clickPoint = Camera.main.ScreenToWorldPoint(worldPoint);
 
@@ -57,8 +58,8 @@ public class Board
         }
 
         Vector2 xyPoint = ClickPositionTranslateToXyPoint(clickPoint);
-        int x = (int)xyPoint.x;
-        int y = (int)xyPoint.y;
+        int x = (int) xyPoint.x;
+        int y = (int) xyPoint.y;
 
         if (_board[x, y] != null) //该位置有棋子
         {
@@ -167,7 +168,7 @@ public class Board
     /// <summary>
     /// 检测平局
     /// </summary>
-    /// <returns></returns>
+    /// <returns>是否平局</returns>
     private bool CheckDraw()
     {
         return _currentTotalSet >= _totalSites;
@@ -179,7 +180,7 @@ public class Board
     /// <param name="x">棋盘索引坐标x</param>
     /// <param name="y">棋盘索引坐标y</param>
     /// <param name="player">当前玩家</param>
-    /// <returns></returns>
+    /// <returns>是否落子成功</returns>
     private bool CheckWin(int x, int y, Player player)
     {
         return CheckWinByX(x, y, player)

@@ -29,7 +29,7 @@ public class BoardView : MonoBehaviour
     /// </summary>
     /// <param name="chessPosition">落子的世界坐标</param>
     /// <param name="currentPlayer">当前玩家</param>
-    public void UpdateBoard(Vector2 chessPosition, Player currentPlayer)
+    public void UpdateBoard(Vector2 chessPosition,Player currentPlayer)
     {
         GameObject chessTemp;
         if (currentPlayer.id == 0)
