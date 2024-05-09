@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\yufulao\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\yufulao\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_GobangPractice.-1066410547.00" t="ExcludeRecursive" />
+    <e p="D:\Project\GobangPractice" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Res" t="Include">
+          <e p="Prefabs" t="Include" />
+          <e p="Textures" t="Include" />
+        </e>
+        <e p="Scenes" t="Include" />
+        <e p="Scripts" t="Include">
+          <e p="Base" t="Include">
+            <e p="Fsm" t="Include">
+              <e p="BaseFsm.cs" t="Include" />
+              <e p="FsmManager.cs" t="Include" />
+              <e p="IFsmState.cs" t="Include" />
+            </e>
+            <e p="SingleTon" t="Include">
+              <e p="BaseSingleTon.cs" t="Include" />
+            </e>
+          </e>
+          <e p="BattleLogic" t="Include">
+            <e p="Component" t="Include">
+              <e p="Chess.cs" t="Include" />
+              <e p="Player.cs" t="Include" />
+            </e>
+            <e p="Controllers" t="Include">
+              <e p="GameController.cs" t="Include" />
+              <e p="GameFsm" t="Include">
+                <e p="GameEndState.cs" t="Include" />
+                <e p="GameInitState.cs" t="Include" />
+                <e p="GamePlayingState.cs" t="Include" />
+                <e p="GamingFsmManager.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Define" t="Include">
+              <e p="DefineChessResultEnum.cs" t="Include" />
+              <e p="FsmStateEnum.cs" t="Include" />
+            </e>
+            <e p="Models" t="Include">
+              <e p="GameModel.cs" t="Include" />
+            </e>
+            <e p="Views" t="Include">
+              <e p="GameView.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Main.cs" t="Include" />
+        </e>
+      </e>
+      <e p="GobangPractice.sln" t="IncludeFlat" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\Bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
